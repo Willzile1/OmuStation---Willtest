@@ -1,0 +1,32 @@
+- type: entity
+  name: dockyard beacon
+  parent: BaseMachine
+  id: DockyardBeacon
+  Description: Marks the maximum size of a shipyard.
+  components:
+  - type: Sprite
+    sprite: PLACEHOLDER
+    state: icon
+  - type: DockyardBeacon
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 40
+    energy: 2.0
+    softness: 32.0
+  - type: Damageable
+    resistances: metallicResistances
+  - type: Destructible
+    thresholds: # List of thresholds that this entity can reach
+    # First and only threshold, defining a trigger and a list of behaviors
+    - trigger: # This threshold's trigger
+        !type:DamageTrigger # Triggers at a total amount of damage...
+        damage: 300 # ... equal to or above 300
+      behaviors: # This threshold's behaviors
+      - !type:SpawnEntitiesBehavior # First behavior, spawns entities
+        spawn:
+          Girder: # Spawn girders...
+            min: 1 # ... from a minimum of 1...
+            max: 1 # ... up to a maximum of 1
+      - !type:DoActsBehavior # Second behavior, activates a list of acts
+        acts: ["Destruction"] # In this case the Destruction act
